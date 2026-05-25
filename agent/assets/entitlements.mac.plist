@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <!-- Allow JIT compilation (required for Electron/V8) -->
+    <key>com.apple.security.cs.allow-jit</key>
+    <true/>
+
+    <!-- Allow unsigned executable memory (Electron requirement) -->
+    <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
+    <true/>
+
+    <!-- Allow dyld environment variables (Electron native modules) -->
+    <key>com.apple.security.cs.allow-dyld-environment-variables</key>
+    <true/>
+
+    <!-- Screen recording permission (required for avfoundation capture) -->
+    <key>com.apple.security.screen-capture</key>
+    <true/>
+
+    <!-- Outgoing network connections (to upload to server) -->
+    <key>com.apple.security.network.client</key>
+    <true/>
+
+    <!-- Access to user home directory (for ~/.screen-agent data) -->
+    <key>com.apple.security.files.user-selected.read-write</key>
+    <true/>
+  </dict>
+</plist>

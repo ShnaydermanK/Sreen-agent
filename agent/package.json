@@ -1,0 +1,104 @@
+{
+  "name": "screen-agent",
+  "version": "1.0.0",
+  "description": "Screen Agent — desktop recording client",
+  "main": "src/electron-main.js",
+  "scripts": {
+    "start":         "node run-agent.js",
+    "electron":      "electron .",
+    "build:win":     "electron-builder --win --x64",
+    "build:win:msi": "electron-builder --win msi --x64",
+    "build:mac":     "electron-builder --mac --arm64",
+    "build:all":     "electron-builder --win --mac",
+    "service:install":   "node src/windows-service.js install",
+    "service:uninstall": "node src/windows-service.js uninstall",
+    "service:status":    "node src/windows-service.js status"
+  },
+  "dependencies": {
+    "axios":         "^1.7.2",
+    "better-sqlite3":"^9.6.0",
+    "form-data":     "^4.0.0",
+    "node-cron":     "^3.0.3",
+    "uuid":          "^10.0.0"
+  },
+  "devDependencies": {
+    "electron":         "^31.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId":       "com.screenagent.client",
+    "productName": "Screen Agent",
+    "copyright":   "Copyright © 2026 Screen Agent",
+
+    "directories": {
+      "buildResources": "assets",
+      "output": "dist"
+    },
+
+    "files": [
+      "src/**/*",
+      "run-agent.js",
+      "config.json",
+      "package.json",
+      "!node_modules/electron/**",
+      "!node_modules/electron-builder/**"
+    ],
+
+    "extraResources": [
+      {
+        "from":   "assets/",
+        "to":     "assets/",
+        "filter": ["*.png", "*.ico", "*.icns"]
+      }
+    ],
+
+    "win": {
+      "target":    [{ "target": "msi", "arch": "x64" }, { "target": "nsis", "arch": "x64" }],
+      "icon":      "assets/icon.ico",
+      "requestedExecutionLevel": "requireAdministrator"
+    },
+
+    "msi": {
+      "oneClick":              false,
+      "perMachine":            true,
+      "runAfterFinish":        true,
+      "createDesktopShortcut": false,
+      "createStartMenuShortcut": true
+    },
+
+    "nsis": {
+      "oneClick":                  false,
+      "allowToChangeInstallationDirectory": false,
+      "installerIcon":             "assets/icon.ico",
+      "uninstallerIcon":           "assets/icon.ico",
+      "installerHeaderIcon":       "assets/icon.ico",
+      "createDesktopShortcut":     false,
+      "createStartMenuShortcut":   true,
+      "shortcutName":              "Screen Agent",
+      "license":                   "assets/LICENSE.txt",
+      "runAfterFinish":            true,
+      "perMachine":                true,
+
+      "include": "installer/nsis-config.nsh",
+
+      "installerLanguages":   ["Russian", "English"],
+      "language":             "1049"
+    },
+
+    "mac": {
+      "target":   [{ "target": "dmg" }, { "target": "pkg" }],
+      "icon":     "assets/icon.icns",
+      "category": "public.app-category.business",
+      "entitlements":            "assets/entitlements.mac.plist",
+      "entitlementsInherit":     "assets/entitlements.mac.plist",
+      "hardenedRuntime":         true,
+      "gatekeeperAssess":        false
+    },
+
+    "linux": {
+      "target": [{ "target": "AppImage" }, { "target": "deb" }],
+      "icon":   "assets/icon.png",
+      "category": "Utility"
+    }
+  }
+}

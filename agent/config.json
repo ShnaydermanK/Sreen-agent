@@ -1,0 +1,17 @@
+{
+  "server_url": "http://localhost:8000",
+  "agent_token": "ad9eda1577fb4e3e8bf96e9972a144a2edbea3a24d5545fd8f679d1b6bfc688e",
+  "recording": {
+    "enabled": true,
+    "fps": 5,
+    "resolution": "1280x720",
+    "codec": "auto",
+    "crf": 30,
+    "segment_duration_min": 1
+  },
+  "activity": {
+    "track_apps": true,
+    "track_idle": true,
+    "idle_threshold_sec": 60
+  }
+}
